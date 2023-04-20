@@ -120,11 +120,13 @@ export async function getStaticProps(context) {
           localizedPaths,
         },
       },
+      revalidate: 10,
     }
   } catch (e) {
     console.log(e)
     return {
       props: {},
+      revalidate: 10,
     }
   }
 }
