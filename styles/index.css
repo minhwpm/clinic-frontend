@@ -1,0 +1,163 @@
+/* San-serif Fonts: Quicksand, Raleway, Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
+/* Serif Fonts: Merriweather, Playfair Display, Old Standard TT */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Default Primary Font: Poppins */
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-Regular.otf");
+}
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-Thin.otf");
+  font-weight: 100;
+}
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-ExtraLight.otf");
+  font-weight: 200;
+}
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-Light.otf");
+  font-weight: 300;
+}
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-Regular.otf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-Medium.otf");
+  font-weight: 500;
+}
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-SemiBold.otf");
+  font-weight: 600;
+}
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-Bold.otf");
+  font-weight: 700;
+}
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-ExtraBold.otf");
+  font-weight: 800;
+}
+@font-face {
+  font-family: Poppins;
+  src: url("/font-poppins/Poppins-Black.otf");
+  font-weight: 900;
+}
+
+:root {
+  --font-sans: 'Poppins', 'sans-serif';
+  --primary-color: #3A8EF6;
+  --primary-color-light: #88bbf9;
+  --primary-color-dark: #1678F2;
+  --gradient-color: #6F3AFA;
+  --gradient-bg: linear-gradient(96.14deg, var(--primary-color) -10.84%, var(--gradient-color) 196.74%);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html {
+  font-size: 13px;
+  @apply text-gray-900 bg-blue-50;
+}
+
+@media screen and (min-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.rich-text-hero a {
+  @apply text-blue-600 underline;
+}
+
+.rich-text-banner {
+  @apply whitespace-pre-line;
+}
+
+.rich-text-banner a {
+  @apply underline;
+}
+
+.gradient-btn {
+  background: var(--gradient-bg);
+  box-shadow: 0px 8px 23px rgba(65, 132, 247, 0.24);
+}
+
+.gradient-section {
+  background: var(--gradient-bg);
+  box-shadow: 0px 20px 24px rgba(65, 132, 247, 0.24);
+  /* border-radius: 32px; */
+}
+
+.gradient-text {
+  background: var(--gradient-bg);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.line-clamp-6 {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+
+.title {
+  @apply text-4xl font-semibold leading-12;
+}
+
+.with-arrow:after {
+  background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1%206a.5.5%200%200%200%200%201V6zM12.854.646a.5.5%200%200%200-.708.708l.708-.708zM18%206.5l.354.354a.5.5%200%200%200%200-.708L18%206.5zm-5.854%205.146a.5.5%200%200%200%20.708.708l-.708-.708zM1%207h16.5V6H1v1zm16.646-.854l-5.5%205.5.708.708%205.5-5.5-.708-.708zm-5.5-4.792l2.75%202.75.708-.708-2.75-2.75-.708.708zm2.75%202.75l2.75%202.75.708-.708-2.75-2.75-.708.708z%22%20fill%3D%22%231264A3%22%2F%3E%3C%2Fsvg%3E);
+  content: "";
+  width: 19px;
+  height: 13px;
+  display: inline-block;
+  margin-left: 0.5em;
+}
+
+.slick-active .paging-item {
+  @apply bg-primary-base
+}
+
+.text-shadow {
+  text-shadow: 0 0 0 #000;
+}
+
+.react-datepicker__time-list-item--disabled {
+  display: none;
+}
+
+.slick-prev:before, .slick-next:before {
+  @apply text-primary-base !important;
+  @apply text-3xl !important
+}
+
+.datetime-input::placeholder {
+  @apply font-light;
+  @apply text-gray-400
+}
