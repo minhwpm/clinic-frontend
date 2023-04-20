@@ -12,23 +12,25 @@ const settings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-  appendDots: (dots) => (
+  appendDots: function appendDots(dots) {
     // @TODO /research/: className="mb-10" doesn't work here as inline style
-    <div style={{ bottom: "-45px" }}>{dots}</div>
-  ),
-  customPaging: (i) => (
-    <span
-      className={classNames(
-        "paging-item",
-        "inline-block",
-        "rounded-xl",
-        "w-3",
-        "h-3",
-        "border-2",
-        "border-primary-base"
-      )}
-    />
-  ),
+    return <div style={{ bottom: "-45px" }}>{dots}</div>
+  },
+  customPaging: function customPaging() {
+    return (
+      <span
+        className={classNames(
+          "paging-item",
+          "inline-block",
+          "rounded-xl",
+          "w-3",
+          "h-3",
+          "border-2",
+          "border-primary-base"
+        )}
+      />
+    )
+  },
 }
 
 const TestimonialsGroup = ({ data }) => {
