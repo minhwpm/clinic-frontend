@@ -13,7 +13,12 @@ const FeatureColumnsGroup = ({ data }) => {
               key={feature.id}
             >
               {feature.picture?.data && (
-                <NextImage className="rounded-t-3xl" media={feature.picture} />
+                <div className="w-full aspect-w-3 aspect-h-2">
+                  <NextImage
+                    className="thumb rounded-t-3xl"
+                    media={feature.picture}
+                  />
+                </div>
               )}
               <h3 className="text-2xl font-medium mt-6 mb-4 px-8">
                 {feature.title}

@@ -10,17 +10,17 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          'base': 'var(--primary-color)',
-          'light': 'var(--primary-color-light)',
-          'dark': 'var(--primary-color-dark)',
+          base: "var(--primary-color)",
+          light: "var(--primary-color-light)",
+          dark: "var(--primary-color-dark)",
         },
         secondary: {
-          '100': '#E2EDFF',
-          '300': '#6C87AE'
+          100: "#E2EDFF",
+          300: "#6C87AE",
         },
         blue: {
-          '1000': '#0A0E31'
-        }
+          1000: "#0A0E31",
+        },
       },
       container: {
         center: true,
@@ -30,7 +30,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'Poppins', 'sans-serif'],
+        sans: ["var(--font-sans)", "Poppins", "sans-serif"],
       },
       // fontWeight: {
       //   thin: 100,
@@ -44,20 +44,23 @@ module.exports = {
       //   black: 900
       // }
       lineHeight: {
-        '12': '3rem',
-        '16': '4rem',
-        '20': '5rem',
-      }
+        12: "3rem",
+        16: "4rem",
+        20: "5rem",
+      },
     },
     screens: {
       sm: "640px",
       md: "768px",
       lg: "1024px",
       xl: "1280px",
-    }
+    },
   },
   variants: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 }
