@@ -12,23 +12,28 @@ const MyApp = ({ Component, pageProps }) => {
   const { global } = pageProps
 
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--primary-color",
-      global?.attributes.stylingSettings?.primaryColor
-    )
-    document.documentElement.style.setProperty(
-      "--font-sans",
-      global?.attributes.stylingSettings?.primaryFont
-    )
+    if (global && global.attributes.stylingSettings) {
+      global.attributes.stylingSettings?.primaryColor &&
+        document.documentElement.style.setProperty(
+          "--primary-color",
+          global.attributes.stylingSettings?.primaryColor
+        )
+      global.attributes.stylingSettings?.primaryFont &&
+        document.documentElement.style.setProperty(
+          "--font-sans",
+          global.attributes.stylingSettings?.primaryFont
+        )
+    }
   }, [
+    global,
     global?.attributes.stylingSettings?.primaryColor,
     global?.attributes.stylingSettings?.primaryFont,
   ])
 
   if (!global) {
-    return null
+    return <Component {...pageProps} />
   }
-  const { metadata, favicon, metaTitleSuffix } = global?.attributes
+  const { metadata, favicon, metaTitleSuffix } = global.attributes
   return (
     <>
       {/* Favicon */}
@@ -74,10 +79,6 @@ MyApp.getInitialProps = async (appContext) => {
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(appContext)
   const globalLocale = await getGlobalData(appContext.router.locale)
-  console.log(
-    "app globalLocale",
-    globalLocale?.data?.attributes.stylingSettings
-  )
 
   return {
     ...appProps,
