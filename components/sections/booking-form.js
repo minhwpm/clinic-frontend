@@ -177,6 +177,7 @@ const BookingForm = ({ data }) => {
                   </div>
 
                   <Field
+                    id="gender-select"
                     className="col-span-1"
                     name="gender"
                     placeholder={

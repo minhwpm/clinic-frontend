@@ -33,7 +33,7 @@ const Hero = ({ data }) => {
       </div>
       {/* Right column for the image */}
       <div className="w-full lg:w-7/12 mt-6 md:mt-0">
-        <NextImage media={data.picture} />
+        <NextImage media={data.picture} priority />
       </div>
     </main>
   )
