@@ -203,6 +203,7 @@ const BookingForm = ({ data }) => {
                       Select doctor
                     </label>
                     <Field
+                      id="expert-select"
                       name="expert"
                       placeholder={
                         <div className="text-gray-400 px-1.5">

@@ -12,7 +12,7 @@ const NextImage = ({ media, ...props }) => {
   }
 
   const loader = ({ src, width }) => {
-    return getStrapiMedia(src)
+    return getStrapiMedia(src, width)
   }
 
   // The image has a fixed width and height
@@ -27,12 +27,11 @@ const NextImage = ({ media, ...props }) => {
     <Image
       {...props}
       loader={loader}
-      layout="responsive"
       width={width || "100%"}
       height={height || "100%"}
-      objectFit="cover"
       src={url}
       alt={alternativeText || ""}
+      className="object-cover w-full h-auto"
     />
   )
 }

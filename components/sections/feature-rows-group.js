@@ -22,11 +22,13 @@ const FeatureRowsGroup = ({ data }) => {
           <div className="w-full lg:w-6/12 xl:w-7/12 lg:pr-6">
             <h3 className="title">{feature.title}</h3>
             <p className="my-6 text-secondary-300">{feature.description}</p>
-            <CustomLink link={feature.link}>
-              <div className="text-primary-base text-lg with-arrow hover:underline">
-                {feature.link.text}
-              </div>
-            </CustomLink>
+            {feature.link && (
+              <CustomLink link={feature.link}>
+                <div className="text-primary-base text-lg with-arrow hover:underline">
+                  {feature.link.text}
+                </div>
+              </CustomLink>
+            )}
           </div>
           {/* Media section */}
           <div className="w-full lg:w-6/12 xl:5/12 max-h-full">
