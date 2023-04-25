@@ -1,9 +1,7 @@
 import classNames from "classnames"
 import NextImage from "../elements/image"
 import CustomLink from "../elements/custom-link"
-import Slider from "react-slick"
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
+import Slider from "../elements/Slider/Slider"
 
 const settings = {
   autoplay: true,
@@ -42,7 +40,7 @@ const TestimonialsGroup = ({ data }) => {
       </p>
 
       <div className="container px-12">
-        <Slider {...settings}>
+        <Slider settings={settings}>
           {data.testimonials.map((testimonial, index) => (
             <div key={testimonial.id} className="p-5 max-w-3xl">
               <div className="bg-white shadow-sm sm:shadow-md mt-10 text-left rounded-2xl">

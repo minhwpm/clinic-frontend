@@ -1,15 +1,36 @@
-import { getStrapiMedia } from "utils/media"
+import Slider from "../../elements/Slider/Slider"
+import NextImage from "../../elements/image"
+
+const settings = {
+  autoplay: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  variableWidth: true,
+  responsive: [
+    {
+      breakpoint: 640,
+      settings: {
+        variableWidth: false,
+        slidesToShow: 2,
+      },
+    },
+  ],
+}
 
 const Partners = ({ data }) => {
   return (
     <section className="bg-secondary-100 pt-12">
       <h2 className="title text-center mb-7">{data.title}</h2>
-      <div className="container flex flex-wrap sm:flex-nowrap gap-4 sm:gap-8 md:gap-12 lg:gap-32 justify-center items-center">
-        {data.logos.map((item) => (
-          <div key={item.id} className="w-24 sm:w-auto mb-12">
-            <img src={getStrapiMedia(item.logo.data?.attributes.url)} />
-          </div>
-        ))}
+      <div className="container px-12 pb-12">
+        <Slider className="slider variable-width" settings={settings}>
+          {data.logos.map((item) => (
+            <div key={item.id} className="px-6 sm:px-12 md:px-16">
+              <NextImage media={item.logo} />
+            </div>
+          ))}
+        </Slider>
       </div>
     </section>
   )
