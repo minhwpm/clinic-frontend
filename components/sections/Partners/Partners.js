@@ -2,7 +2,7 @@ import Slider from "../../elements/Slider/Slider"
 import NextImage from "../../elements/image"
 
 const settings = {
-  autoplay: false,
+  autoplay: true,
   infinite: true,
   speed: 500,
   slidesToShow: 1,
@@ -21,8 +21,8 @@ const settings = {
 
 const Partners = ({ data }) => {
   return (
-    <section className="bg-secondary-100 pt-12">
-      <h2 className="title text-center mb-7">{data.title}</h2>
+    <section className="bg-secondary-100 pt-8">
+      <h2 className="title text-center mb-10">{data.title}</h2>
       <div className="container px-12 pb-12">
         <Slider className="slider variable-width" settings={settings}>
           {data.logos.map((item) => (
