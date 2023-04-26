@@ -83,6 +83,7 @@ export async function getPageData({ slug, locale, preview }) {
             data {
               id
               attributes {
+                title
                 locale
                 localizations {
                   data {
@@ -237,6 +238,14 @@ export async function getPageData({ slug, locale, preview }) {
                         ...FileParts
                       }
                     }
+                  }
+                  ... on ComponentSectionsArticle {
+                    id
+                    articleSummary
+                    articleThumbnail {
+                      ...FileParts                      
+                    }
+                    articleContent
                   }
                 }
               }

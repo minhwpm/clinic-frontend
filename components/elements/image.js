@@ -2,8 +2,10 @@ import { getStrapiMedia } from "utils/media"
 import Image from "next/image"
 import PropTypes from "prop-types"
 import { mediaPropTypes } from "utils/types"
+import classNames from "classnames"
 
 const NextImage = ({ media, ...props }) => {
+  const { className } = props
   const { url, alternativeText, width, height } = media?.data?.attributes ?? {
     url: "http:localhost:1337/uploads/logo_abe2f5b150.png",
     alternativeText: "",
@@ -31,7 +33,7 @@ const NextImage = ({ media, ...props }) => {
       height={height || "100%"}
       src={url}
       alt={alternativeText || ""}
-      className="object-cover w-full h-auto"
+      className={classNames("object-cover w-full h-auto", className)}
     />
   )
 }

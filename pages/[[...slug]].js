@@ -1,4 +1,4 @@
-import ErrorPage from "next/error"
+import { createContext } from "react"
 import { getPageData, fetchAPI, getGlobalData } from "utils/api"
 import Sections from "@/components/sections"
 import Seo from "@/components/elements/seo"
@@ -90,13 +90,15 @@ export async function getStaticProps(context) {
       preview,
     })
 
+    // console.log("PAGE DATA", pageData)
+
     if (pageData == null) {
       // Giving the page no props will trigger a 404 page
       return { props: {} }
     }
 
     // We have the required page data, pass it to the page component
-    const { contentSections, metadata, localizations, slug } =
+    const { contentSections, title, metadata, localizations, slug } =
       pageData.attributes
 
     const pageContext = {
@@ -104,6 +106,7 @@ export async function getStaticProps(context) {
       locales,
       defaultLocale,
       slug,
+      title,
       localizations,
     }
 
