@@ -1,15 +1,15 @@
 import App from "next/app"
 import Head from "next/head"
-import ErrorPage from "next/error"
 import { DefaultSeo } from "next-seo"
 import { getStrapiMedia } from "utils/media"
 import { getGlobalData } from "utils/api"
 import { useEffect } from "react"
+import Layout from "@/components/layout"
 import "@/styles/index.css"
 
 const MyApp = ({ Component, pageProps }) => {
   // Extract the data we need
-  const { global } = pageProps
+  const { global, pageContext } = pageProps
 
   useEffect(() => {
     if (global && global.attributes.stylingSettings) {
@@ -65,7 +65,9 @@ const MyApp = ({ Component, pageProps }) => {
         }}
       />
       {/* Display the content */}
-      <Component {...pageProps} />
+      <Layout global={global} pageContext={pageContext}>
+        <Component {...pageProps} />
+      </Layout>
     </>
   )
 }

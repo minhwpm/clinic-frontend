@@ -239,14 +239,6 @@ export async function getPageData({ slug, locale, preview }) {
                       }
                     }
                   }
-                  ... on ComponentSectionsArticle {
-                    id
-                    articleSummary
-                    articleThumbnail {
-                      ...FileParts                      
-                    }
-                    articleContent
-                  }
                 }
               }
             }
@@ -269,6 +261,95 @@ export async function getPageData({ slug, locale, preview }) {
 
   // Return the first item since there should only be one result per slug
   return pagesData.data.pages.data[0]
+}
+
+export async function getArticleData({ slug, locale, preview }) {
+  // Find the pages that match this slug
+  const gqlEndpoint = getStrapiURL("/graphql")
+  const pagesRes = await fetch(gqlEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
+        fragment FileParts on UploadFileEntityResponse {
+          data {
+            id
+            attributes {
+              alternativeText
+              width
+              height
+              mime
+              url
+              formats
+            }
+          }
+        }
+        query GetArticles(
+          $slug: String!
+          $publicationState: PublicationState!
+          $locale: I18NLocaleCode!
+        ) {        
+          articles(
+            filters: { slug: { eq: $slug } }
+            publicationState: $publicationState
+            locale: $locale
+          ) {
+            data {
+              id
+              attributes {
+                title
+                summary
+                media {
+                  ...FileParts
+                }
+                content
+                locale
+                localizations {
+                  data {
+                    id
+                    attributes {
+                      locale
+                    }
+                  }
+                }
+                slug
+                metadata {
+                  metaTitle
+                  metaDescription
+                  shareImage {
+                    ...FileParts
+                  }
+                  twitterCardType
+                  twitterUsername
+                }
+              }
+            }
+          }
+        }      
+      `,
+      variables: {
+        slug,
+        publicationState: preview ? "PREVIEW" : "LIVE",
+        locale,
+      },
+    }),
+  })
+
+  const pagesData = await pagesRes.json()
+
+  console.log(pagesData)
+  // Make sure we found something, otherwise return null
+  if (
+    pagesData.data?.articles == null ||
+    pagesData.data?.articles.data.length === 0
+  ) {
+    return null
+  }
+
+  // Return the first item since there should only be one result per slug
+  return pagesData.data.articles.data[0]
 }
 
 // Get site data from Strapi (metadata, navbar, footer...)

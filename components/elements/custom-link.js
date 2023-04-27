@@ -7,20 +7,29 @@ const CustomLink = ({ link, children }) => {
 
   // For internal links, use the Next.js Link component
   if (isInternalLink) {
-    return <Link href={link.url}>{children}</Link>
+    return (
+      <Link className="hover:text-primary-base" href={link.url}>
+        {children}
+      </Link>
+    )
   }
 
   // Plain <a> tags for external links
   if (link.newTab) {
     return (
-      <a href={link.url} target="_blank" rel="noopener noreferrer">
+      <a
+        className="hover:text-primary-base"
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {children}
       </a>
     )
   }
 
   return (
-    <a href={link.url} target="_self">
+    <a className="hover:text-primary-base" href={link.url} target="_self">
       {children}
     </a>
   )

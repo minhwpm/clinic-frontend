@@ -1,20 +1,19 @@
-import { getPageData, fetchAPI } from "utils/api"
-import Sections from "@/components/sections"
+import { getArticleData, fetchAPI, getGlobalData } from "utils/api"
 import Seo from "@/components/elements/seo"
 import { useRouter } from "next/router"
 import { getLocalizedPaths } from "utils/localize"
-import Custom404 from "./404"
+import Custom404 from "../404"
+import Article from "@/components/elements/Article/Article"
 
 // The file is called [[...slug]].js because we're using Next's
 // optional catch all routes feature. See the related docs:
 // https://nextjs.org/docs/routing/dynamic-routes#optional-catch-all-routes
 
-const DynamicPage = (props) => {
-  const { sections, metadata, preview, global } = props
+const ArticlePage = ({ metadata, preview, global, pageContext, article }) => {
   const router = useRouter()
 
   // Check if the required data was provided
-  if (!router.isFallback && !sections?.length) {
+  if (!router.isFallback && !article) {
     return <Custom404 />
   }
 
@@ -24,8 +23,8 @@ const DynamicPage = (props) => {
   }
 
   // Merge default site SEO settings with page specific SEO settings
-  if (metadata.shareImage?.data == null) {
-    delete metadata.shareImage
+  if (metadata?.shareImage?.data == null) {
+    delete metadata?.shareImage
   }
   const metadataWithDefaults = {
     ...global.attributes.metadata,
@@ -36,8 +35,7 @@ const DynamicPage = (props) => {
     <>
       {/* Add meta tags for SEO*/}
       <Seo metadata={metadataWithDefaults} />
-      {/* Display content sections */}
-      <Sections sections={sections} preview={preview} />
+      <Article data={article} />
     </>
   )
 }
@@ -47,7 +45,7 @@ export async function getStaticPaths(context) {
   const pages = await context.locales.reduce(
     async (currentPagesPromise, locale) => {
       const currentPages = await currentPagesPromise
-      const localePages = await fetchAPI("/pages", {
+      const localePages = await fetchAPI("/articles", {
         locale,
         fields: ["slug", "locale"],
       })
@@ -77,8 +75,8 @@ export async function getStaticProps(context) {
   try {
     // @TODO turn on Preview mode in CMS(backend)
     // Fetch pages. Include drafts if preview mode is on
-    const pageData = await getPageData({
-      slug: (!params.slug ? ["home"] : params.slug).join("/"),
+    const pageData = await getArticleData({
+      slug: params.slug.join("/"),
       locale,
       preview,
     })
@@ -89,7 +87,7 @@ export async function getStaticProps(context) {
     }
 
     // We have the required page data, pass it to the page component
-    const { contentSections, title, metadata, localizations, slug } =
+    const { title, summary, media, content, metadata, localizations, slug } =
       pageData.attributes
 
     const pageContext = {
@@ -106,11 +104,16 @@ export async function getStaticProps(context) {
     return {
       props: {
         preview,
-        sections: contentSections,
         metadata,
         pageContext: {
           ...pageContext,
           localizedPaths,
+        },
+        article: {
+          title,
+          summary,
+          content,
+          media,
         },
       },
       revalidate: 10,
@@ -124,4 +127,4 @@ export async function getStaticProps(context) {
   }
 }
 
-export default DynamicPage
+export default ArticlePage
