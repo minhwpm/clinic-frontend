@@ -7,7 +7,7 @@ import classNames from "classnames"
 const NextImage = ({ media, ...props }) => {
   const { className } = props
   const { url, alternativeText, width, height } = media?.data?.attributes ?? {
-    url: "http:localhost:1337/uploads/logo_abe2f5b150.png",
+    url: "http://localhost:1337/uploads/logo_abe2f5b150.png?w=828",
     alternativeText: "",
     width: 100,
     height: 100,

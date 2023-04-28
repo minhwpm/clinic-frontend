@@ -7,15 +7,15 @@ const ArticleIndex = ({ articles }) => {
     <div className="container my-10">
       {articles.data.length > 0 && (
         <>
-          <div className="grid lg:grid-cols-2 gap-10">
-            <div className="col-span-1">
+          <div className="grid lg:grid-cols-12 gap-10 border-b">
+            <div className="lg:col-span-7">
               <ContentCard
                 key={articles.data[0].id}
                 data={articles.data[0].attributes}
                 variants="top"
               />
             </div>
-            <div className="col-span-1">
+            <div className="lg:col-span-5">
               {articles.data[1] && (
                 <ContentCard
                   key={articles.data[1].id}
@@ -30,9 +30,9 @@ const ArticleIndex = ({ articles }) => {
               )}
             </div>
           </div>
-          <div className="grid lg:grid-cols-5">
-            <div className="lg:col-span-3">
-              {articles.data.slice(3).map((article, index) => (
+          <div className="grid lg:grid-cols-12 gap-10">
+            <div className="lg:col-span-7">
+              {articles.data.slice(3).map((article) => (
                 <ContentCard key={article.id} data={article.attributes} />
               ))}
             </div>
