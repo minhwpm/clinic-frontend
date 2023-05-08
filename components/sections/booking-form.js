@@ -64,7 +64,7 @@ const BookingForm = ({ data }) => {
   return (
     <div id="booking-form" className="bg-secondary-100 pt-20 pb-10 text-center">
       <div className="container flex items-center justify-center">
-        {data.media.data && (
+        {data?.media.data && (
           <div className="hidden lg:block w-1/2 pr-28">
             <NextImage media={data.media} />
           </div>
@@ -121,14 +121,14 @@ const BookingForm = ({ data }) => {
                   className={`w-full max-w-lg grid grid-cols-2 gap-4 justify-center text-left`}
                 >
                   <h2 className="title col-span-2 text-center mb-10">
-                    {data.title}
+                    {data?.title ?? "Request an Appointment"}
                   </h2>
                   <div className="col-span-2">
                     <Field
                       className="w-full h-14 text-base focus:outline-none hover:border-gray-400 py-4 md:py-0 px-4 border-2 rounded-md"
                       type="text"
                       name="fullname"
-                      placeholder={data.fullnamePlaceholder ?? "Full name *"}
+                      placeholder={data?.fullnamePlaceholder ?? "Full name *"}
                       required
                     />
                     <p className="text-red-500 text-sm mt-1 ml-2">
@@ -237,7 +237,7 @@ const BookingForm = ({ data }) => {
                       className="w-32"
                       appearance="dark"
                       type="submit"
-                      button={data.submitButton}
+                      button={data?.submitButton ?? { text: "Submit" }}
                       disabled={isSubmitting}
                       loading={loading}
                     />

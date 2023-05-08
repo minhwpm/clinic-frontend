@@ -5,7 +5,10 @@ import { getStrapiMedia } from "utils/media"
 import { getGlobalData } from "utils/api"
 import { useEffect } from "react"
 import Layout from "@/components/layout"
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import "@/styles/index.css"
+
+const queryClient = new QueryClient()
 
 const MyApp = ({ Component, pageProps }) => {
   // Extract the data we need
@@ -35,7 +38,7 @@ const MyApp = ({ Component, pageProps }) => {
   }
   const { metadata, favicon, metaTitleSuffix } = global.attributes
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       {/* Favicon */}
       <Head>
         <link
@@ -68,7 +71,7 @@ const MyApp = ({ Component, pageProps }) => {
       <Layout global={global} pageContext={pageContext}>
         <Component {...pageProps} />
       </Layout>
-    </>
+    </QueryClientProvider>
   )
 }
 

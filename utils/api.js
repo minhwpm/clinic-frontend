@@ -40,6 +40,24 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   return data
 }
 
+export async function fetchData(path, urlParamsObject = {}, options = {}) {
+  // Merge default and user options
+  const mergedOptions = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    ...options,
+  }
+
+  // Build request URL
+  const queryString = qs.stringify(urlParamsObject)
+  const requestUrl = `${getStrapiURL(
+    `/api${path}${queryString ? `?${queryString}` : ""}`
+  )}`
+  // const response = await fetch(requestUrl, mergedOptions)
+  return fetch(requestUrl, mergedOptions)
+}
+
 /**
  *
  * @param {Object} options
