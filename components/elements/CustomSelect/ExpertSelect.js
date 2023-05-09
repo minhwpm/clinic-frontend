@@ -9,7 +9,7 @@ export default function ExpertSelect(props) {
     <>
       <CustomSelect {...props} components={{ Option: ExpertOption }} />
       {field.value && (
-        <div className="w-full mt-1 flex gap-5 p-5 rounded shadow bg-white">
+        <div className="mt-2 flex gap-5 p-5 rounded shadow bg-white">
           <div className="flex-shrink-0">
             <img
               className="w-14 h-14 object-cover rounded-full"

@@ -1,0 +1,39 @@
+[
+  {
+    "id": "personalInfo",
+    "fields": [
+      {
+        "label": "Fullname",
+        "type": "text"
+      },
+      {
+        "label": "Age",
+        "type": "number"
+      },
+      {
+        "label": "Gender",
+        "type": "select"
+      },
+      {
+        "label": "Email",
+        "type": "email"
+      },
+      {
+        "label": "Phone number",
+        "type": "phone"
+      }
+    ]
+  },
+  {
+    "id": "primaryConcern",
+    "fields": [
+      
+    ]
+  },
+  {
+    "id": "datetime",
+    "fields": [
+      
+    ]
+  }
+]

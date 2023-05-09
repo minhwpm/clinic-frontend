@@ -16,7 +16,7 @@ const Button = ({
       <div
         className={classNames(
           // Common classes
-          "flex w-full justify-center lg:w-auto text-center uppercase tracking-wide font-semibold text-base md:text-sm border-2 rounded-full",
+          "flex justify-center lg:w-auto text-center uppercase tracking-wide font-semibold text-base md:text-sm border-2 rounded-full",
           // Full-size button
           {
             "px-8 py-4": compact === false,
