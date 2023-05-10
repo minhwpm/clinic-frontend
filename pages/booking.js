@@ -131,7 +131,7 @@ export default function Booking() {
                         className="w-full h-14 text-base focus:outline-none hover:border-gray-400 py-4 md:py-0 px-4 border-2 rounded-md"
                         type="text"
                         name="fullname"
-                        placeholder={"Full name *"}
+                        placeholder={"Full name (*)"}
                         required
                       />
                       <p className="text-red-500 text-sm mt-1 ml-2">
@@ -159,7 +159,7 @@ export default function Booking() {
                       className="col-span-1"
                       placeholder={
                         <div className="text-gray-400 px-1.5">
-                          Select your gender (optional)
+                          Gender (optional)
                         </div>
                       }
                       options={genderOptions}
@@ -170,7 +170,7 @@ export default function Booking() {
                         className="h-14 text-base focus:outline-none hover:border-gray-400 py-4 md:py-0 px-4 border-2 rounded-md"
                         type="phone"
                         name="phone"
-                        placeholder={"Phone *"}
+                        placeholder={"Phone (*)"}
                         required
                       />
                       <p className="text-red-500 text-sm mt-1 ml-2">
@@ -198,18 +198,12 @@ export default function Booking() {
                     active={activeScreen === 1}
                   >
                     <div className="col-span-2">
-                      <label
-                        htmlFor="expert"
-                        className="w-full text-xl font-medium block"
-                      >
-                        Select doctor
-                      </label>
                       <Field
                         id="expert-select"
                         name="expert"
                         placeholder={
                           <div className="text-gray-400 px-1.5">
-                            Click to select a doctor
+                            Select doctor (optional)
                           </div>
                         }
                         options={experts}
@@ -230,16 +224,10 @@ export default function Booking() {
                     active={activeScreen === 2}
                   >
                     <div>
-                      <label
-                        htmlFor="appointmentDatetime"
-                        className="text-xl font-medium block"
-                      >
-                        Select datetime
-                      </label>
                       <Field
                         className="datetime-input w-full h-14 px-4 border-2 border-gray-200 hover:border-gray-400 rounded cursor-pointer text-transparent text-shadow"
                         name="appointmentDatetime"
-                        placeholderText="Click to select datetime"
+                        placeholderText="Select datetime (*)"
                         component={DatePicker}
                         required
                       />

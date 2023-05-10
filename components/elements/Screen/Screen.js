@@ -6,7 +6,7 @@ export default function Screen({ children, active, className }) {
       className={classNames(
         className,
         { hidden: !active },
-        "px-8 py-10 bg-white shadow rounded"
+        "px-8 py-10 bg-white shadow rounded h-72"
       )}
     >
       {children}
