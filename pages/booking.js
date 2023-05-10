@@ -1,4 +1,3 @@
-import BookingForm from "@/components/sections/booking-form";
 import Screen from "@/components/elements/Screen/Screen";
 import React, { useEffect, useState } from "react";
 import { fetchAPI, getStrapiURL } from "utils/api";

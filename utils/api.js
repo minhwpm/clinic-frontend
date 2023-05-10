@@ -232,7 +232,7 @@ export async function getPageData({ slug, locale, preview }) {
                       pricePeriod
                     }
                   }
-                  ... on ComponentSectionsBookingForm {
+                  ... on ComponentSectionsLeadForm {
                     id
                     emailPlaceholder
                     location

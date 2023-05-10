@@ -7,7 +7,7 @@ import CTAbanner from "@/components/sections/cta-banner"
 import TestimonialsGroup from "@/components/sections/testimonials-group"
 import RichText from "./sections/rich-text"
 import Pricing from "./sections/pricing"
-import BookingForm from "./sections/booking-form"
+import LeadForm from "./sections/lead-form"
 import Partners from "./sections/Partners/Partners"
 import Article from "./elements/Article/Article"
 
@@ -21,7 +21,7 @@ const sectionComponents = {
   ComponentSectionsTestimonialsGroup: TestimonialsGroup,
   ComponentSectionsRichText: RichText,
   ComponentSectionsPricing: Pricing,
-  ComponentSectionsBookingForm: BookingForm,
+  ComponentSectionsLeadForm: LeadForm,
   ComponentSectionsPartners: Partners,
   ComponentSectionsArticle: Article,
 }
