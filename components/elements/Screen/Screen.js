@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classNames from "classnames"
 
 export default function Screen({ children, active, className }) {
   return (

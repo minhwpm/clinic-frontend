@@ -1,39 +1,170 @@
 [
   {
-    "id": "personalInfo",
-    "fields": [
+    "id": "target",
+    "label": "Patient Information",
+    "steps": [
       {
-        "label": "Fullname",
-        "type": "text"
+        "id": "isPatient",
+        "title": "Are you the patient?",
+        "fields": [
+          {
+            "name": "isPatient",
+            "value": true,
+            "label": "YES (I'm the patient)",
+            "type": "radio"
+          },
+          {
+            "name": "isPatient",
+            "value": false,
+            "label": "NO (I’m requesting for someone else)",
+            "type": "radio"
+          }
+        ]
       },
       {
-        "label": "Age",
-        "type": "number"
+        "id": "requestor",
+        "title": "Tell us about yourself.",
+        "fields": [
+          {
+            "name": "requestorFullname",
+            "label": "Fullname (*)",
+            "type": "text",
+            "required": true
+          },
+          {
+            "name": "relationship",
+            "label": "Relationship to patient",
+            "type": "select",
+            "options": [
+              {
+                "label": "Parents",
+                "value": "parents"
+              },
+              {
+                "label": "Children",
+                "value": "children"
+              },
+              {
+                "label": "Spouse",
+                "value": "spouse"
+              },
+              {
+                "label": "Sibling",
+                "value": "sibling"
+              },
+              {
+                "label": "Others",
+                "value": "others"
+              }
+            ]
+          },
+          {
+            "name": "requestorEmail",
+            "label": "Email",
+            "type": "email",
+            "required": false
+          },
+          {
+            "name": "requestorPhone",
+            "label": "Phone (*)",
+            "type": "phone",
+            "required": true
+          }
+        ]
       },
       {
-        "label": "Gender",
-        "type": "select"
-      },
-      {
-        "label": "Email",
-        "type": "email"
-      },
-      {
-        "label": "Phone number",
-        "type": "phone"
+        "id": "target",
+        "title": {
+          "isPatient": "Tell us about yourself",
+          "isNotPatient": "Tell us about the patient"
+        },
+        "fields": [
+          {
+            "name": "targetFullname",
+            "label": "Fullname (*)",
+            "type": "text",
+            "required": true
+          },
+          {
+            "name": "targetAge",
+            "label": "Age (*)",
+            "type": "number",
+            "width": "1/2",
+            "required": true
+          },
+          {
+            "name": "targetGender",
+            "label": "Gender (*)",
+            "type": "select",
+            "options": [
+              {
+                "value": "female",
+                "label": "Female"
+              },
+              {
+                "value": "male",
+                "label": "Male"
+              },
+              {
+                "value": "nonbiary",
+                "label": "Nonbinary"
+              }
+            ],
+            "width": "1/2",
+            "required": false
+          },
+          {
+            "name": "targetPhone",
+            "label": "Phone (*)",
+            "type": "phone",
+            "width": "1/2",
+            "required": true
+          },
+          {
+            "name": "targetEmail",
+            "label": "Email",
+            "type": "email",
+            "width": "1/2",
+            "required": false
+          },
+          {
+            "name": "concern",
+            "label": "Please tell us about your concern (*)",
+            "type": "textarea",
+            "required": true
+          }
+        ]
       }
     ]
   },
   {
-    "id": "primaryConcern",
-    "fields": [
-      
-    ]
-  },
-  {
-    "id": "datetime",
-    "fields": [
-      
+    "id": "options",
+    "label": "Options",
+    "steps": [
+      {
+        "id": "options",
+        "title": "Select your options",
+        "fields": [
+          {
+            "name": "service",
+            "label": "Select a service",
+            "type": "select",
+            "required": false
+          },
+          {
+            "name": "expert",
+            "label": "Select a doctor",
+            "type": "select",
+            "required": false
+          },
+          {
+            "name": "datetime",
+            "label": "Select datetime",
+            "type": "datetime",
+            "required": false
+          }
+        ]
+      }
     ]
   }
 ]
