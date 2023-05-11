@@ -13,7 +13,13 @@ const Button = ({
   disabled,
 }) => {
   return (
-    <button link={button} onClick={handleClick} type={type} disabled={disabled}>
+    <button
+      className="disabled:opacity-50 disabled:cursor-not-allowed"
+      link={button}
+      onClick={handleClick}
+      type={type}
+      disabled={disabled}
+    >
       <div
         className={classNames(
           // Common classes
