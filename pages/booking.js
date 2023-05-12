@@ -36,6 +36,30 @@ const BookingSchema = yup.object().shape({
   bookingTime: yup.date().required(requiredErrorMessage),
 })
 
+const initialData = {
+  // Dummy Data to test Confirm screen
+  isPatient: "NO",
+  requestorFullname: "Nguyen Thi Minh Hien",
+  relationship: {
+    label: "Parent",
+    value: "parent",
+  },
+  requestorEmail: "",
+  requestorPhone: "0918097143",
+  fullname: "Hoang Nguyen Bao Han",
+  age: 4,
+  gender: {
+    label: "Female",
+    value: "female",
+  },
+  email: "",
+  phone: "0918097143",
+  service: {
+    label: "Primary Care",
+    value: 1,
+  },
+}
+
 export default function Booking() {
   const screens = process.reduce((prev, curr) => {
     return [...prev, ...curr.steps]
@@ -84,34 +108,7 @@ export default function Booking() {
       <div className="container flex items-center justify-center">
         {!succeeded && (
           <Formik
-            initialValues={{
-              isPatient: "",
-              // Dummy Data to test Confirm screen
-              isPatient: "NO",
-              requestorFullname: "Nguyen Thi Minh Hien",
-              relationship: {
-                label: "Parent",
-                value: "parent",
-              },
-              requestorEmail: "",
-              requestorPhone: "0918097143",
-              fullname: "Hoang Nguyen Bao Han",
-              age: 4,
-              gender: {
-                label: "Female",
-                value: "female",
-              },
-              email: "",
-              phone: "0918097143",
-              service: {
-                label: "Primary Care",
-                value: 1,
-              },
-              // expert: {
-              //   label: "",
-              //   value: null
-              // }
-            }}
+            initialValues={{}}
             validationSchema={BookingSchema}
             onSubmit={async (values, { setSubmitting, setErrors }) => {
               console.log("submit", values)
@@ -363,123 +360,3 @@ export default function Booking() {
     }
   }
 }
-
-{/* <Screen
-                    className="grid grid-cols-2 gap-5"
-                    id="target"
-                    active={activeScreen === 0}
-                  >
-                    <div className="col-span-2">
-                      <Field
-                        className="w-full h-14 text-base focus:outline-none hover:border-gray-400 py-4 md:py-0 px-4 border-2 rounded-md"
-                        type="text"
-                        name="fullname"
-                        placeholder={"Full name (*)"}
-                        required
-                      />
-                      <p className="text-red-500 text-sm mt-1 ml-2">
-                        {(errors.fullname &&
-                          touched.fullname &&
-                          errors.fullname) ||
-                          errors.api}
-                      </p>
-                    </div>
-                    <div className="col-span-1">
-                      <Field
-                        className="h-14 text-base focus:outline-none hover:border-gray-400 py-4 md:py-0 px-4 border-2 rounded-md"
-                        type="number"
-                        name="age"
-                        placeholder="Age (optional)"
-                      />
-                      <p className="text-red-500 text-sm mt-1 ml-2">
-                        {(errors.age && touched.age && errors.age) ||
-                          errors.api}
-                      </p>
-                    </div>
-                    <Field
-                      id="gender-select"
-                      name="gender"
-                      className="col-span-1"
-                      placeholder={
-                        <div className="text-gray-400 px-1.5">
-                          Gender (optional)
-                        </div>
-                      }
-                      options={genderOptions}
-                      component={CustomSelect}
-                    />
-                    <div className="col-span-1">
-                      <Field
-                        className="h-14 text-base focus:outline-none hover:border-gray-400 py-4 md:py-0 px-4 border-2 rounded-md"
-                        type="phone"
-                        name="phone"
-                        placeholder={"Phone (*)"}
-                        required
-                      />
-                      <p className="text-red-500 text-sm mt-1 ml-2">
-                        {(errors.phone && touched.phone && errors.phone) ||
-                          errors.api}
-                      </p>
-                    </div>
-                    <div className="col-span-1">
-                      <Field
-                        className="w-full h-14 text-base focus:outline-none hover:border-gray-400 py-4 md:py-0 px-4 border-2 rounded-md"
-                        type="email"
-                        name="email"
-                        placeholder={"Email (optional)"}
-                      />
-                      <p className="text-red-500 text-sm mt-1 ml-2">
-                        {(errors.email && touched.email && errors.email) ||
-                          errors.api}
-                      </p>
-                    </div>
-                  </Screen>
-
-                  <Screen
-                    className="grid grid-cols-2 gap-5"
-                    id="concern"
-                    active={activeScreen === 1}
-                  >
-                    <div className="col-span-2">
-                      <Field
-                        id="expert-select"
-                        name="expert"
-                        placeholder={
-                          <div className="text-gray-400 px-1.5">
-                            Select doctor (optional)
-                          </div>
-                        }
-                        options={experts}
-                        component={ExpertSelect}
-                      />
-                    </div>
-                    <Field
-                      className="col-span-2 h-24 text-base focus:outline-none hover:border-gray-400 p-4 border-2 rounded-md"
-                      component="textarea"
-                      name="visitReason"
-                      placeholder="Please describe your symptoms or primary concern... (optional)"
-                    />
-                  </Screen>
-
-                  <Screen
-                    className="grid gap-5"
-                    id="datetime"
-                    active={activeScreen === 2}
-                  >
-                    <div>
-                      <Field
-                        className="datetime-input w-full h-14 px-4 border-2 border-gray-200 hover:border-gray-400 rounded cursor-pointer text-transparent text-shadow"
-                        name="bookingTime"
-                        placeholderText="Select datetime (*)"
-                        component={DatePicker}
-                        required
-                      />
-                    </div>
-                    <Button
-                      appearance="dark"
-                      type="submit"
-                      button={{ text: "Submit" }}
-                      disabled={isSubmitting}
-                      loading={loading}
-                    />
-                  </Screen> */}
