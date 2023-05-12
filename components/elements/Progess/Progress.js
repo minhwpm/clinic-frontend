@@ -14,12 +14,15 @@ const Progress = ({ milestones, activeIndex }) => {
               className={classNames(
                 "w-8 h-8 border-2 inline-block rounded-full flex justify-center",
                 {
-                  "border-primary-light": index >= activeIndex,
+                  // inactive incompleted milestones
+                  "border-primary-base": index >= activeIndex,
                 },
                 {
+                  // active (current) milestone
                   "bg-primary-base": index === activeIndex,
                 },
                 {
+                  // completed milestones
                   "border-primary-light": index < activeIndex,
                   "bg-primary-light": index < activeIndex,
                 }
