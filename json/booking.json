@@ -160,7 +160,7 @@
           },
           {
             "name": "bookingTime",
-            "label": "Select datetime",
+            "label": "Select datetime (*)",
             "type": "datetime",
             "required": true
           }

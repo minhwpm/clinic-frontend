@@ -14,6 +14,15 @@ const requiredErrorMessage = "This field is required"
 
 const BookingSchema = yup.object().shape({
   requestorFullname: yup.string().required(requiredErrorMessage),
+  requestorPhone: yup
+    .string()
+    .required(requiredErrorMessage)
+    .matches(
+      /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/,
+      "Please enter a valid phone number"
+    ),
+  requestorEmail: yup.string().email("Please enter a valid email address"),
+  fullname: yup.string().required(requiredErrorMessage),
   phone: yup
     .string()
     .required(requiredErrorMessage)
@@ -23,16 +32,17 @@ const BookingSchema = yup.object().shape({
     ),
   email: yup.string().email("Please enter a valid email address"),
   age: yup.number().positive("Please enter a positive number"),
-  bookingTime: yup.date(),
+  concern: yup.string().required(requiredErrorMessage),
+  bookingTime: yup.date().required(requiredErrorMessage),
 })
 
 export default function Booking() {
-  const steps = process.reduce((prev, curr) => {
+  const screens = process.reduce((prev, curr) => {
     return [...prev, ...curr.steps]
   }, [])
-  const fields = steps.reduce((prev, curr) => [...prev, ...curr.fields], [])
+  // const fields = screens.reduce((prev, curr) => [...prev, ...curr.fields], [])
   // console.log("Process", process)
-  console.log("Steps", steps)
+  // console.log("screens", screens)
 
   const [loading, setLoading] = useState(false)
   const [isContinued, setContinued] = useState(false)
@@ -76,12 +86,12 @@ export default function Booking() {
           <Formik
             initialValues={{
               isPatient: "",
-              // Dummy Data to test Confirm Step
+              // Dummy Data to test Confirm screen
               isPatient: "NO",
               requestorFullname: "Nguyen Thi Minh Hien",
               relationship: {
-                label: "Parents",
-                value: "parents",
+                label: "Parent",
+                value: "parent",
               },
               requestorEmail: "",
               requestorPhone: "0918097143",
@@ -93,7 +103,6 @@ export default function Booking() {
               },
               email: "",
               phone: "0918097143",
-              concern: "cough",
               service: {
                 label: "Primary Care",
                 value: 1,
@@ -158,7 +167,7 @@ export default function Booking() {
                   <h2 className="title text-center mb-10">
                     Request an Appointment
                   </h2>
-                  {steps.map((screen, index) => (
+                  {screens.map((screen, index) => (
                     <Screen
                       className="grid grid-cols-2 gap-5"
                       key={screen.id}
@@ -246,36 +255,23 @@ export default function Booking() {
                                 // value={null}
                                 required={field.required}
                               />
-                              <p className="text-red-500 text-sm mt-1 ml-2">
-                                {(errors.fullname &&
-                                  touched.fullname &&
-                                  errors.fullname) ||
-                                  errors.api}
-                              </p>
                             </>
                           )}
+                          <p className="text-red-500 text-sm mt-1 ml-2">
+                            {(errors[field.name] &&
+                              touched[field.name] &&
+                              errors[field.name]) ||
+                              errors.api}
+                          </p>
                         </div>
                       ))}
                     </Screen>
                   ))}
                   <Screen
                     id="confirmation"
-                    // active={true}
-                    active={activeScreen === steps.length}
+                    active={activeScreen === screens.length}
                   >
                     {/* CONFIRMATION SCREEN */}
-                    {/* {fields.map((field) => (
-                      <div key={field.name} className="flex">
-                        <div>{field.label}</div>
-                        <div>
-                          {typeof values[field.name] === "string"
-                            ? values[field.name]
-                            : values[field.name]?.label
-                            ? values[field.name]?.label
-                            : values[field.name]?.toString()}
-                        </div>
-                      </div>
-                    ))} */}
                     {Object.keys(values).map((key) =>(
                       <div key={key} className="grid grid-cols-3">
                         <div className="col-span-1">{key}</div>
@@ -288,7 +284,6 @@ export default function Booking() {
                         </div>
                       </div>
                     ))}
-                    {console.log("VALUES", values)}
                     <Button
                       type="submit"
                       button={{ text: "Submit" }}
@@ -297,10 +292,7 @@ export default function Booking() {
                       appearance="dark"
                     />
                   </Screen>
-                  {activeScreen < steps.length && steps[activeScreen].fields.every((field) => {
-                    console.log(field.name, values[field.name])
-                    return !field.required || Boolean(values[field.name])
-                  }) && setContinued(true)}
+                  {isScreenValid(values, errors)}
                   <div className="grid grid-cols-2 py-3">
                     <span
                       className={classNames(
@@ -317,7 +309,7 @@ export default function Booking() {
                     </span>
                     <span
                       className={classNames(
-                        { hidden: activeScreen === steps.length},
+                        { hidden: activeScreen === screens.length},
                         { "col-span-2": activeScreen === 0 },
                         "cursor-pointer",
                         "place-self-end"
@@ -354,6 +346,22 @@ export default function Booking() {
       </div>
     </div>
   )
+
+  function isScreenValid(values, errors) {
+    if (
+      activeScreen < screens.length &&
+      screens[activeScreen].fields.every((field) => {
+        return (
+          !errors[field.name] &&
+          (!field.required || Boolean(values[field.name]))
+        )
+      })
+    ) {
+      setContinued(true)
+    } else {
+      setContinued(false)
+    }
+  }
 }
 
 {/* <Screen

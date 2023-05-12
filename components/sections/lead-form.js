@@ -1,27 +1,9 @@
-import React, { useEffect, useState } from "react"
-import { fetchAPI, getStrapiURL } from "utils/api"
+import React, { useState } from "react"
+import { fetchAPI } from "utils/api"
 import * as yup from "yup"
 import { Formik, Form, Field } from "formik"
 import Button from "../elements/Button/button"
-import DatePicker from "../elements/DatePicker/DatePicker"
-import CustomSelect from "../elements/CustomSelect/CustomSelect"
-import ExpertSelect from "../elements/CustomSelect/ExpertSelect"
 import NextImage from "../elements/image"
-
-const genderOptions = [
-  {
-    value: "female",
-    label: "Female",
-  },
-  {
-    value: "male",
-    label: "Male",
-  },
-  {
-    value: "others",
-    label: "Others", //@TODO change to Nonbinary
-  },
-]
 
 const requiredErrorMessage = "This field is required"
 
