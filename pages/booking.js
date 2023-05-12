@@ -9,6 +9,7 @@ import CustomSelect from "@/components/elements/CustomSelect/CustomSelect"
 import ExpertSelect from "@/components/elements/CustomSelect/ExpertSelect"
 import classNames from "classnames"
 import process from "../json/booking.json"
+import Progress from "@/components/elements/Progess/Progress"
 
 const requiredErrorMessage = "This field is required"
 
@@ -108,7 +109,9 @@ export default function Booking() {
       <div className="container flex items-center justify-center">
         {!succeeded && (
           <Formik
-            initialValues={{}}
+            initialValues={{
+              isPatient: "YES",
+            }}
             validationSchema={BookingSchema}
             onSubmit={async (values, { setSubmitting, setErrors }) => {
               console.log("submit", values)
@@ -158,15 +161,14 @@ export default function Booking() {
           >
             {({ values, errors, touched, isSubmitting }) => (
               <>
-                <Form
-                  className={`w-full max-w-lg gap-4 justify-center text-left`}
-                >
-                  <h2 className="title text-center mb-10">
+                <Form className="w-full max-w-lg text-left">
+                  <h2 className="title text-center mb-5">
                     Request an Appointment
                   </h2>
+                  <Progress milestones={screens} activeIndex={activeScreen} />
                   {screens.map((screen, index) => (
                     <Screen
-                      className="grid grid-cols-2 gap-5"
+                      className="grid grid-cols-2 gap-5 mt-5"
                       key={screen.id}
                       id={screen.id}
                       active={activeScreen === index}
@@ -197,6 +199,7 @@ export default function Booking() {
                           )}
                           {field.type === "select" && (
                             <Field
+                              id={field.name}
                               className=""
                               type={field.type}
                               name={field.name}
@@ -235,7 +238,6 @@ export default function Booking() {
                               component="textarea"
                               name={field.name}
                               placeholder={field.label}
-                              value={null}
                               required={field.required}
                             />
                           )}
@@ -249,7 +251,6 @@ export default function Booking() {
                                 type={field.type}
                                 name={field.name}
                                 placeholder={field.label}
-                                // value={null}
                                 required={field.required}
                               />
                             </>
@@ -265,6 +266,7 @@ export default function Booking() {
                     </Screen>
                   ))}
                   <Screen
+                    className="mt-5"
                     id="confirmation"
                     active={activeScreen === screens.length}
                   >
