@@ -9,13 +9,13 @@
         "fields": [
           {
             "name": "isPatient",
-            "value": true,
+            "value": "YES",
             "label": "YES (I'm the patient)",
             "type": "radio"
           },
           {
             "name": "isPatient",
-            "value": false,
+            "value": "NO",
             "label": "NO (I’m requesting for someone else)",
             "type": "radio"
           }
@@ -37,12 +37,12 @@
             "type": "select",
             "options": [
               {
-                "label": "Parents",
-                "value": "parents"
+                "label": "Parent",
+                "value": "parent"
               },
               {
-                "label": "Children",
-                "value": "children"
+                "label": "Child",
+                "value": "child"
               },
               {
                 "label": "Spouse",
@@ -56,7 +56,8 @@
                 "label": "Others",
                 "value": "others"
               }
-            ]
+            ],
+            "required": true
           },
           {
             "name": "requestorEmail",
@@ -80,20 +81,20 @@
         },
         "fields": [
           {
-            "name": "targetFullname",
+            "name": "fullname",
             "label": "Fullname (*)",
             "type": "text",
             "required": true
           },
           {
-            "name": "targetAge",
+            "name": "age",
             "label": "Age (*)",
             "type": "number",
             "width": "1/2",
             "required": true
           },
           {
-            "name": "targetGender",
+            "name": "gender",
             "label": "Gender (*)",
             "type": "select",
             "options": [
@@ -106,22 +107,22 @@
                 "label": "Male"
               },
               {
-                "value": "nonbiary",
+                "value": "nonbinary",
                 "label": "Nonbinary"
               }
             ],
             "width": "1/2",
-            "required": false
+            "required": true
           },
           {
-            "name": "targetPhone",
+            "name": "phone",
             "label": "Phone (*)",
             "type": "phone",
             "width": "1/2",
             "required": true
           },
           {
-            "name": "targetEmail",
+            "name": "email",
             "label": "Email",
             "type": "email",
             "width": "1/2",
@@ -158,10 +159,10 @@
             "required": false
           },
           {
-            "name": "datetime",
+            "name": "bookingTime",
             "label": "Select datetime",
             "type": "datetime",
-            "required": false
+            "required": true
           }
         ]
       }

@@ -23,15 +23,16 @@ const BookingSchema = yup.object().shape({
     ),
   email: yup.string().email("Please enter a valid email address"),
   age: yup.number().positive("Please enter a positive number"),
-  appointmentDatetime: yup.date(),
+  bookingTime: yup.date(),
 })
 
 export default function Booking() {
-  const screens = process.reduce((prev, curr) => {
+  const steps = process.reduce((prev, curr) => {
     return [...prev, ...curr.steps]
   }, [])
+  const fields = steps.reduce((prev, curr) => [...prev, ...curr.fields], [])
   // console.log("Process", process)
-  // console.log("Screens", screens)
+  console.log("Steps", steps)
 
   const [loading, setLoading] = useState(false)
   const [isContinued, setContinued] = useState(false)
@@ -74,11 +75,33 @@ export default function Booking() {
         {!succeeded && (
           <Formik
             initialValues={{
-              isPatient: true,
-              fullname: "",
-              phone: "",
+              isPatient: "",
+              // Dummy Data to test Confirm Step
+              isPatient: "NO",
+              requestorFullname: "Nguyen Thi Minh Hien",
+              relationship: {
+                label: "Parents",
+                value: "parents",
+              },
+              requestorEmail: "",
+              requestorPhone: "0918097143",
+              fullname: "Hoang Nguyen Bao Han",
+              age: 4,
+              gender: {
+                label: "Female",
+                value: "female",
+              },
               email: "",
-              age: "",
+              phone: "0918097143",
+              concern: "cough",
+              service: {
+                label: "Primary Care",
+                value: 1,
+              },
+              // expert: {
+              //   label: "",
+              //   value: null
+              // }
             }}
             validationSchema={BookingSchema}
             onSubmit={async (values, { setSubmitting, setErrors }) => {
@@ -93,18 +116,27 @@ export default function Booking() {
                     method: "POST",
                     body: JSON.stringify({
                       data: {
+                        service: {
+                          connect: values.service?.id
+                            ? [{ id: values.service?.id }]
+                            : null,
+                        },
                         expert: {
                           connect: values.expert?.id
                             ? [{ id: values.expert?.id }]
                             : null,
                         },
-                        appointmentDatetime: values.appointmentDatetime,
+                        bookingTime: values.bookingTime,
                         fullname: values.fullname,
                         age: values.age ? values.age : null,
                         gender: values.gender?.value,
-                        visitReason: values.visitReason,
+                        concern: values.concern,
                         phone: values.phone,
                         email: values.email,
+                        requestorFullname: values.requestorFullname,
+                        relationship: values.relationship?.value,
+                        requestorEmail: values.requestorEmail,
+                        requestorPhone: values.requestorPhone,
                       },
                     }),
                   }
@@ -126,7 +158,7 @@ export default function Booking() {
                   <h2 className="title text-center mb-10">
                     Request an Appointment
                   </h2>
-                  {screens.map((screen, index) => (
+                  {steps.map((screen, index) => (
                     <Screen
                       className="grid grid-cols-2 gap-5"
                       key={screen.id}
@@ -185,7 +217,7 @@ export default function Booking() {
                           {field.type === "datetime" && (
                             <Field
                               className="datetime-input w-full h-14 px-4 border-2 border-gray-200 hover:border-gray-400 rounded cursor-pointer text-transparent text-shadow"
-                              name="appointmentDatetime"
+                              name={field.name}
                               placeholderText={field.label}
                               component={DatePicker}
                               required={field.required}
@@ -224,18 +256,48 @@ export default function Booking() {
                           )}
                         </div>
                       ))}
-                      {index === screens.length - 1 && (
-                        <Button
-                          appearance="dark"
-                          type="submit"
-                          button={{ text: "Submit" }}
-                          disabled={isSubmitting}
-                          loading={loading}
-                        />
-                      )}
                     </Screen>
                   ))}
-                  {screens[activeScreen].fields.every((field) => {
+                  <Screen
+                    id="confirmation"
+                    // active={true}
+                    active={activeScreen === steps.length}
+                  >
+                    {/* CONFIRMATION SCREEN */}
+                    {/* {fields.map((field) => (
+                      <div key={field.name} className="flex">
+                        <div>{field.label}</div>
+                        <div>
+                          {typeof values[field.name] === "string"
+                            ? values[field.name]
+                            : values[field.name]?.label
+                            ? values[field.name]?.label
+                            : values[field.name]?.toString()}
+                        </div>
+                      </div>
+                    ))} */}
+                    {Object.keys(values).map((key) =>(
+                      <div key={key} className="grid grid-cols-3">
+                        <div className="col-span-1">{key}</div>
+                        <div className="col-span-2">
+                          {typeof values[key] === "string"
+                            ? values[key]
+                            : values[key].label
+                            ? values[key].label
+                            : values[key].toString()}
+                        </div>
+                      </div>
+                    ))}
+                    {console.log("VALUES", values)}
+                    <Button
+                      type="submit"
+                      button={{ text: "Submit" }}
+                      disabled={isSubmitting}
+                      loading={loading}
+                      appearance="dark"
+                    />
+                  </Screen>
+                  {activeScreen < steps.length && steps[activeScreen].fields.every((field) => {
                     console.log(field.name, values[field.name])
                     return !field.required || Boolean(values[field.name])
                   }) && setContinued(true)}
@@ -255,7 +317,7 @@ export default function Booking() {
                     </span>
                     <span
                       className={classNames(
-                        { hidden: activeScreen === screens.length - 1 },
+                        { hidden: activeScreen === steps.length},
                         { "col-span-2": activeScreen === 0 },
                         "cursor-pointer",
                         "place-self-end"
@@ -399,7 +461,7 @@ export default function Booking() {
                     <div>
                       <Field
                         className="datetime-input w-full h-14 px-4 border-2 border-gray-200 hover:border-gray-400 rounded cursor-pointer text-transparent text-shadow"
-                        name="appointmentDatetime"
+                        name="bookingTime"
                         placeholderText="Select datetime (*)"
                         component={DatePicker}
                         required
