@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 
 const Progress = ({ milestones, activeIndex }) => {
-  console.log(milestones.length, activeIndex)
+  // console.log(milestones.length, activeIndex)
   return (
     <div>
       <div className="flex justify-center relative">

@@ -13,7 +13,7 @@ import Progress from "@/components/elements/Progess/Progress"
 
 const requiredErrorMessage = "This field is required"
 
-const BookingSchema = yup.object().shape({
+const RequestorSchema = {
   requestorFullname: yup.string().required(requiredErrorMessage),
   requestorPhone: yup
     .string()
@@ -23,6 +23,9 @@ const BookingSchema = yup.object().shape({
       "Please enter a valid phone number"
     ),
   requestorEmail: yup.string().email("Please enter a valid email address"),
+}
+
+const ClientSchema = {
   fullname: yup.string().required(requiredErrorMessage),
   phone: yup
     .string()
@@ -34,8 +37,11 @@ const BookingSchema = yup.object().shape({
   email: yup.string().email("Please enter a valid email address"),
   age: yup.number().positive("Please enter a positive number"),
   concern: yup.string().required(requiredErrorMessage),
+}
+
+const OptionSchema = {
   bookingTime: yup.date().required(requiredErrorMessage),
-})
+}
 
 const initialData = {
   // Dummy Data to test Confirm screen
@@ -62,8 +68,8 @@ const initialData = {
 }
 
 export default function Booking() {
-  const screens = process.reduce((prev, curr) => {
-    return [...prev, ...curr.steps]
+  const originalScreens = process.reduce((prev, curr) => {
+    return [...prev, ...curr.screens]
   }, [])
   // const fields = screens.reduce((prev, curr) => [...prev, ...curr.fields], [])
   // console.log("Process", process)
@@ -75,6 +81,13 @@ export default function Booking() {
   const [services, setServices] = useState([])
   const [succeeded, setShowSuccess] = useState(false)
   const [activeScreen, setActiveScreen] = useState(0)
+  const [screens, setScreens] = useState(originalScreens)
+  const [bookingSchema, setBookingSchema] = useState(
+    yup.object().shape({
+      ...OptionSchema,
+      ...ClientSchema,
+    })
+  )
 
   useEffect(() => {
     fetch(getStrapiURL("/api/experts?populate=*"))
@@ -104,6 +117,8 @@ export default function Booking() {
       })
   }, [])
 
+  console.log("SCREENS", screens)
+
   return (
     <div id="booking-form" className="bg-secondary-100 pt-20 pb-10 text-center">
       <div className="container flex items-center justify-center">
@@ -112,7 +127,7 @@ export default function Booking() {
             initialValues={{
               isPatient: "YES",
             }}
-            validationSchema={BookingSchema}
+            validationSchema={bookingSchema}
             onSubmit={async (values, { setSubmitting, setErrors }) => {
               console.log("submit", values)
               setLoading(true)
@@ -159,93 +174,96 @@ export default function Booking() {
               setShowSuccess(true)
             }}
           >
-            {({ values, errors, touched, isSubmitting }) => (
-              <>
-                <Form className="w-full max-w-lg text-left">
-                  <h2 className="title text-center mb-5">
-                    Request an Appointment
-                  </h2>
-                  <Progress milestones={screens} activeIndex={activeScreen} />
-                  {screens.map((screen, index) => (
-                    <Screen
-                      className="grid grid-cols-2 gap-5 mt-5"
-                      key={screen.id}
-                      id={screen.id}
-                      active={activeScreen === index}
-                    >
-                      {screen.title && (
-                        <h3 className="col-span-2 text-xl font-semibold">
-                          {screen.id !== "target" && screen.title}
-                          {screen.id === "target" && screen.title.isNotPatient}
-                        </h3>
-                      )}
-                      {screen.fields.map((field, index) => (
-                        <div
-                          key={field.label}
-                          className={classNames("col-span-2", {
-                            "col-span-1": field.width === "1/2",
-                          })}
-                        >
-                          {field.type === "radio" && (
-                            <label>
+            {({ values, errors, touched, isSubmitting }) => {
+              return (
+                <>
+                  <Form className="w-full max-w-lg text-left">
+                    <h2 className="title text-center mb-5">
+                      Request an Appointment
+                    </h2>
+                    <Progress milestones={screens} activeIndex={activeScreen} />
+                    {screens.map((screen, index) => (
+                      <Screen
+                        className={classNames("grid grid-cols-2 gap-5 mt-5")}
+                        key={screen.id}
+                        id={screen.id}
+                        active={activeScreen === index}
+                      >
+                        {screen.title && (
+                          <h3 className="col-span-2 text-xl font-semibold">
+                            {screen.id !== "target" && screen.title}
+                            {screen.id === "target" &&
+                              (values.isPatient === "YES"
+                                ? screen.title.isPatient
+                                : screen.title.isNotPatient)}
+                          </h3>
+                        )}
+                        {screen.fields.map((field, index) => (
+                          <div
+                            key={field.label}
+                            className={classNames("col-span-2", {
+                              "col-span-1": field.width === "1/2",
+                            })}
+                          >
+                            {field.type === "radio" && (
+                              <label>
+                                <Field
+                                  className="mr-2"
+                                  type={field.type}
+                                  name={field.name}
+                                  value={field.value}
+                                />
+                                {field.label}
+                              </label>
+                            )}
+                            {field.type === "select" && (
                               <Field
-                                className="mr-2"
+                                id={field.name}
+                                className=""
                                 type={field.type}
                                 name={field.name}
-                                value={field.value}
+                                placeholder={
+                                  <div className="text-gray-400 px-1.5">
+                                    {field.label}
+                                  </div>
+                                }
+                                options={
+                                  field.name === "expert"
+                                    ? experts
+                                    : field.name === "service"
+                                    ? services
+                                    : field.options
+                                }
+                                component={
+                                  field.name === "expert"
+                                    ? ExpertSelect
+                                    : CustomSelect
+                                }
+                                required={field.required}
                               />
-                              {field.label}
-                            </label>
-                          )}
-                          {field.type === "select" && (
-                            <Field
-                              id={field.name}
-                              className=""
-                              type={field.type}
-                              name={field.name}
-                              placeholder={
-                                <div className="text-gray-400 px-1.5">
-                                  {field.label}
-                                </div>
-                              }
-                              options={
-                                field.name === "expert"
-                                  ? experts
-                                  : field.name === "service"
-                                  ? services
-                                  : field.options
-                              }
-                              component={
-                                field.name === "expert"
-                                  ? ExpertSelect
-                                  : CustomSelect
-                              }
-                              required={field.required}
-                            />
-                          )}
-                          {field.type === "datetime" && (
-                            <Field
-                              className="datetime-input w-full h-14 px-4 border-2 border-gray-200 hover:border-gray-400 rounded cursor-pointer text-transparent text-shadow"
-                              name={field.name}
-                              placeholderText={field.label}
-                              component={DatePicker}
-                              required={field.required}
-                            />
-                          )}
-                          {field.type === "textarea" && (
-                            <Field
-                              className="w-full h-24 text-base focus:outline-none hover:border-gray-400 p-4 border-2 rounded-md"
-                              component="textarea"
-                              name={field.name}
-                              placeholder={field.label}
-                              required={field.required}
-                            />
-                          )}
-                          {(field.type === "text" ||
-                            field.type === "number" ||
-                            field.type === "email" ||
-                            field.type === "phone") && (
-                            <>
+                            )}
+                            {field.type === "datetime" && (
+                              <Field
+                                className="datetime-input w-full h-14 px-4 border-2 border-gray-200 hover:border-gray-400 rounded cursor-pointer text-transparent text-shadow"
+                                name={field.name}
+                                placeholderText={field.label}
+                                component={DatePicker}
+                                required={field.required}
+                              />
+                            )}
+                            {field.type === "textarea" && (
+                              <Field
+                                className="w-full h-24 text-base focus:outline-none hover:border-gray-400 p-4 border-2 rounded-md"
+                                component="textarea"
+                                name={field.name}
+                                placeholder={field.label}
+                                required={field.required}
+                              />
+                            )}
+                            {(field.type === "text" ||
+                              field.type === "number" ||
+                              field.type === "email" ||
+                              field.type === "phone") && (
                               <Field
                                 className="w-full h-14 text-base focus:outline-none hover:border-gray-400 py-4 md:py-0 px-4 border-2 rounded-md"
                                 type={field.type}
@@ -253,81 +271,103 @@ export default function Booking() {
                                 placeholder={field.label}
                                 required={field.required}
                               />
-                            </>
-                          )}
-                          <p className="text-red-500 text-sm mt-1 ml-2">
-                            {(errors[field.name] &&
-                              touched[field.name] &&
-                              errors[field.name]) ||
-                              errors.api}
-                          </p>
+                            )}
+                            <p className="text-red-500 text-sm mt-1 ml-2">
+                              {(errors[field.name] &&
+                                touched[field.name] &&
+                                errors[field.name]) ||
+                                errors.api}
+                            </p>
+                          </div>
+                        ))}
+                      </Screen>
+                    ))}
+                    <Screen
+                      className="mt-5"
+                      id="confirmation"
+                      active={activeScreen === screens.length}
+                    >
+                      {/* CONFIRMATION SCREEN */}
+                      {Object.keys(values).map((key) => (
+                        <div key={key} className="grid grid-cols-3">
+                          <div className="col-span-1">{key}</div>
+                          <div className="col-span-2">
+                            {typeof values[key] === "string"
+                              ? values[key]
+                              : values[key].label
+                              ? values[key].label
+                              : values[key].toString()}
+                          </div>
                         </div>
                       ))}
+                      <Button
+                        type="submit"
+                        button={{ text: "Submit" }}
+                        disabled={isSubmitting}
+                        loading={loading}
+                        appearance="dark"
+                      />
                     </Screen>
-                  ))}
-                  <Screen
-                    className="mt-5"
-                    id="confirmation"
-                    active={activeScreen === screens.length}
-                  >
-                    {/* CONFIRMATION SCREEN */}
-                    {Object.keys(values).map((key) =>(
-                      <div key={key} className="grid grid-cols-3">
-                        <div className="col-span-1">{key}</div>
-                        <div className="col-span-2">
-                          {typeof values[key] === "string"
-                            ? values[key]
-                            : values[key].label
-                            ? values[key].label
-                            : values[key].toString()}
-                        </div>
-                      </div>
-                    ))}
-                    <Button
-                      type="submit"
-                      button={{ text: "Submit" }}
-                      disabled={isSubmitting}
-                      loading={loading}
-                      appearance="dark"
-                    />
-                  </Screen>
-                  {isScreenValid(values, errors)}
-                  <div className="grid grid-cols-2 py-3">
-                    <span
-                      className={classNames(
-                        { hidden: activeScreen === 0 },
-                        "cursor-pointer",
-                        "justify-self-start"
-                      )}
-                    >
-                      <Button
-                        type="button"
-                        handleClick={() => setActiveScreen(activeScreen - 1)}
-                        button={{ text: "Back" }}
-                      />
-                    </span>
-                    <span
-                      className={classNames(
-                        { hidden: activeScreen === screens.length},
-                        { "col-span-2": activeScreen === 0 },
-                        "cursor-pointer",
-                        "place-self-end"
-                      )}
-                    >
-                      <Button
-                        type="button"
-                        disabled={!isContinued}
-                        handleClick={() => {
-                          setActiveScreen(activeScreen + 1)
-                          setContinued(false)
-                        }}
-                        button={{ text: "Continue" }}
-                      />
-                    </span>
-                  </div>
-                </Form>
-              </>
-            )}
+                    {isScreenValid(values, errors)}
+                    <div className="grid grid-cols-2 py-3">
+                      <span
+                        className={classNames(
+                          { hidden: activeScreen === 0 },
+                          "cursor-pointer",
+                          "justify-self-start"
+                        )}
+                      >
+                        <Button
+                          type="button"
+                          handleClick={() => setActiveScreen(activeScreen - 1)}
+                          button={{ text: "Back" }}
+                        />
+                      </span>
+                      <span
+                        className={classNames(
+                          { hidden: activeScreen === screens.length },
+                          { "col-span-2": activeScreen === 0 },
+                          "cursor-pointer",
+                          "place-self-end"
+                        )}
+                      >
+                        <Button
+                          type="button"
+                          disabled={!isContinued}
+                          handleClick={() => {
+                            if (values.isPatient === "YES") {
+                              const copied = [...screens].filter(
+                                (screen) => screen.hidden?.isPatient !== "YES"
+                              )
+                              setScreens(copied)
+                              setBookingSchema(
+                                yup.object().shape({
+                                  ...OptionSchema,
+                                  ...ClientSchema,
+                                })
+                              )
+                            }
+                            if (values.isPatient === "NO") {
+                              setScreens(originalScreens)
+                              setBookingSchema(
+                                yup.object().shape({
+                                  ...OptionSchema,
+                                  ...ClientSchema,
+                                  ...RequestorSchema,
+                                })
+                              )
+                            }
+                            setActiveScreen(activeScreen + 1)
+                            setContinued(false)
+                          }}
+                          button={{ text: "Continue" }}
+                        />
+                      </span>
+                    </div>
+                  </Form>
+                </>
+              )
+            }}
           </Formik>
         )}
         {succeeded && (

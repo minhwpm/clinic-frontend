@@ -1,15 +1,15 @@
-import { fetchAPI } from "utils/api";
-import ContentCard from "@/components/elements/ContentCard/ContentCard";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import useArticleQuery from "utils/hooks/useArticleQuery";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { fetchAPI } from "utils/api"
+import ContentCard from "@/components/elements/ContentCard/ContentCard"
+import { useInfiniteQuery } from "@tanstack/react-query"
+import useArticleQuery from "utils/hooks/useArticleQuery"
+import InfiniteScroll from "react-infinite-scroll-component"
 
 const Blog = (props) => {
   const { firstList } = props
 
   const { articles, error, fetchNextPage, status, hasNextPage } =
     useArticleQuery()
-  console.log("useAritcleQuery", articles);
+  console.log("useAritcleQuery", articles)
 
   // console.log("Articles list", articles)
   return (
@@ -82,4 +82,4 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default Blog;
+export default Blog

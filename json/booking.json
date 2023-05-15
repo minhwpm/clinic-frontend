@@ -2,7 +2,7 @@
   {
     "id": "target",
     "label": "Patient Information",
-    "steps": [
+    "screens": [
       {
         "id": "isPatient",
         "title": "Are you the patient?",
@@ -23,7 +23,10 @@
       },
       {
         "id": "requestor",
-        "title": "Tell us about yourself.",
+        "title": "Tell us about yourself",
+        "hidden": {
+          "isPatient": "YES"
+        },
         "fields": [
           {
             "name": "requestorFullname",
@@ -141,7 +144,7 @@
   {
     "id": "options",
     "label": "Options",
-    "steps": [
+    "screens": [
       {
         "id": "options",
         "title": "Select your options",

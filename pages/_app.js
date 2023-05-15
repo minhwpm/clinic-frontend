@@ -5,7 +5,7 @@ import { getStrapiMedia } from "utils/media"
 import { getGlobalData } from "utils/api"
 import { useEffect } from "react"
 import Layout from "@/components/layout"
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import "@/styles/index.css"
 
 const queryClient = new QueryClient()
