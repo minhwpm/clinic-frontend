@@ -150,6 +150,7 @@ export async function getPageData({ slug, locale, preview }) {
                     picture {
                       ...FileParts
                     }
+                    styling
                   }
                   ... on ComponentSectionsFeatureColumnsGroup {
                     id
