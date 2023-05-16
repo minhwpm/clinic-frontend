@@ -1,5 +1,35 @@
 [
   {
+    "id": "options",
+    "label": "Options",
+    "screens": [
+      {
+        "id": "options",
+        "title": "Select your options",
+        "fields": [
+          {
+            "name": "service",
+            "label": "Select a service",
+            "type": "select",
+            "required": false
+          },
+          {
+            "name": "expert",
+            "label": "Select a doctor",
+            "type": "select",
+            "required": false
+          },
+          {
+            "name": "bookingTime",
+            "label": "Select datetime (*)",
+            "type": "datetime",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "target",
     "label": "Patient Information",
     "screens": [
@@ -135,36 +165,6 @@
             "name": "concern",
             "label": "Please tell us about your concern (*)",
             "type": "textarea",
-            "required": true
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "options",
-    "label": "Options",
-    "screens": [
-      {
-        "id": "options",
-        "title": "Select your options",
-        "fields": [
-          {
-            "name": "service",
-            "label": "Select a service",
-            "type": "select",
-            "required": false
-          },
-          {
-            "name": "expert",
-            "label": "Select a doctor",
-            "type": "select",
-            "required": false
-          },
-          {
-            "name": "bookingTime",
-            "label": "Select datetime (*)",
-            "type": "datetime",
             "required": true
           }
         ]

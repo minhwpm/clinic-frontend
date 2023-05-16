@@ -89,6 +89,8 @@ export default function Booking() {
     })
   )
 
+  console.log("experts", experts)
+
   useEffect(() => {
     fetch(getStrapiURL("/api/experts?populate=*"))
       .then((res) => res.json())
@@ -117,7 +119,7 @@ export default function Booking() {
       })
   }, [])
 
-  console.log("SCREENS", screens)
+  // console.log("SCREENS", screens)
 
   return (
     <div id="booking-form" className="bg-secondary-100 pt-20 pb-10 text-center">
@@ -133,7 +135,7 @@ export default function Booking() {
               setLoading(true)
               try {
                 setErrors({ api: null })
-                await fetchAPI(
+                const bookings = await fetchAPI(
                   "/booking-form-submissions/",
                   {},
                   {
@@ -161,6 +163,23 @@ export default function Booking() {
                         relationship: values.relationship?.value,
                         requestorEmail: values.requestorEmail,
                         requestorPhone: values.requestorPhone,
+                      },
+                    }),
+                  }
+                )
+                console.log("Bookings", bookings)
+                await fetchAPI(
+                  `/experts/${values.expert.id}`,
+                  {},
+                  {
+                    method: "PUT",
+                    body: JSON.stringify({
+                      data: {
+                        bookings: {
+                          connect: bookings?.data.id
+                            ? [{ id: bookings?.data.id }]
+                            : null,
+                        },
                       },
                     }),
                   }
