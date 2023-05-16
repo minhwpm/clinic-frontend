@@ -27,7 +27,9 @@ const Partners = ({ data }) => {
         <Slider className="slider variable-width" settings={settings}>
           {data.logos.map((item) => (
             <div key={item.id} className="px-6 sm:px-12 md:px-16">
-              <NextImage media={item.logo} />
+              <a href={item.url} target="_blank" rel="noreferrer">
+                <NextImage media={item.logo} />
+              </a>
             </div>
           ))}
         </Slider>

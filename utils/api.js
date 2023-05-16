@@ -253,6 +253,7 @@ export async function getPageData({ slug, locale, preview }) {
                     logos {
                       id
                       title
+                      url
                       logo {
                         ...FileParts
                       }
