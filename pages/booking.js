@@ -336,6 +336,7 @@ export default function Booking() {
                       >
                         <Button
                           type="button"
+                          appearance="dark-outline"
                           handleClick={() => setActiveScreen(activeScreen - 1)}
                           button={{ text: "Back" }}
                         />
@@ -350,6 +351,7 @@ export default function Booking() {
                       >
                         <Button
                           type="button"
+                          appearance="dark"
                           disabled={!isContinued}
                           handleClick={() => {
                             if (values.isPatient === "YES") {
