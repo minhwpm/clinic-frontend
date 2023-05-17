@@ -89,8 +89,6 @@ export default function Booking() {
     })
   )
 
-  console.log("experts", experts)
-
   useEffect(() => {
     fetch(getStrapiURL("/api/experts?populate=*"))
       .then((res) => res.json())
@@ -167,7 +165,6 @@ export default function Booking() {
                     }),
                   }
                 )
-                console.log("Bookings", bookings)
                 await fetchAPI(
                   `/experts/${values.expert.id}`,
                   {},
@@ -197,6 +194,7 @@ export default function Booking() {
               return (
                 <>
                   <Form className="w-full max-w-lg text-left">
+                    {/* {console.log("FORM VALUE", values)} */}
                     <h2 className="title text-center mb-5">
                       Request an Appointment
                     </h2>
