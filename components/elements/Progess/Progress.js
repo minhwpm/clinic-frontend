@@ -30,10 +30,9 @@ const Progress = ({ milestones, activeIndex }) => {
             >
               {index < activeIndex && (
                 <FontAwesomeIcon
-                  className="mt-1"
+                  className="mt-1 text-white"
                   icon={faCheck}
                   size="lg"
-                  style={{ color: "#ffffff" }}
                 />
               )}
             </div>

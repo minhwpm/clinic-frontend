@@ -1,6 +1,7 @@
 import { createContext } from "react"
 import Navbar from "./elements/navbar"
 import Footer from "./elements/footer"
+import SettingsPanel from "./elements/SettingsPanel/SettingsPanel"
 
 export const PageContext = createContext(null)
 
@@ -17,6 +18,9 @@ const Layout = ({ children, global, pageContext }) => {
             notificationBanner={notificationBanner}
             pageContext={pageContext}
           />
+          {process.env.NEXT_PUBLIC_SETTINGS_PANEL_SHOWED && (
+            <SettingsPanel className="fixed right-0 bottom-32 z-10" />
+          )}
           <div>{children}</div>
         </div>
         {/* Aligned to the bottom */}

@@ -15,6 +15,7 @@ const MyApp = ({ Component, pageProps }) => {
   const { global, pageContext } = pageProps
 
   useEffect(() => {
+    console.log(global?.attributes.stylingSettings)
     if (global && global.attributes.stylingSettings) {
       global.attributes.stylingSettings?.primaryColor &&
         document.documentElement.style.setProperty(
