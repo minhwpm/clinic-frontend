@@ -111,22 +111,20 @@ const timeframes = [
 const DatePicker = (props) => {
   const { setFieldValue } = useFormikContext()
   const [field] = useField(props.field)
+  const [displayingDt, setDisplayingDt] = useState(field.value ?? new Date())
 
   return (
     <>
       <ReactDatePicker
         {...field}
         {...props}
-        selected={field.value ?? new Date()}
+        selected={displayingDt}
         onChange={(value) => {
-          const selectedDate = new Date(value)
-          const currentDate = new Date()
-          // if ( selectedDate.getDay() === currentDate.getDay() && (selectedDate.getHours() < currentDate.getHours())) {
-          //   console.log("invalid timeframe")
-          //   setFieldValue(null)
-          //   return
-          // }
-          setFieldValue(field.name, selectedDate)
+          // reset HH:MM to 00:00 for DisplayingDt so no timeframes selected when switching Date
+          value = setHours(value, 0)
+          value = setMinutes(value, 0)
+          setDisplayingDt(value)
+          setFieldValue(field.name, null)
         }}
         minDate={
           new Date().getHours() >= BOOKING_TIME_END - 2
@@ -145,23 +143,24 @@ const DatePicker = (props) => {
               "p-3 col-span-1 rounded-xl border border-gray-300 text-center transition-all duration-300",
               {
                 "cursor-pointer  hover:bg-primary-light hover:border-primary-base":
-                  validateTimeFrame(field.value, item.value.hour),
+                  validateTimeFrame(displayingDt, item.value.hour),
               },
               {
                 "pointer-events-none text-gray-400 bg-gray-200":
-                  !validateTimeFrame(field.value, item.value.hour),
+                  !validateTimeFrame(displayingDt, item.value.hour),
               },
               {
                 "bg-primary-base text-white hover:bg-primary-dark":
-                  field.value &&
-                  field.value.getHours() === item.value.hour &&
-                  field.value.getMinutes() === item.value.min,
+                  displayingDt &&
+                  displayingDt.getHours() === item.value.hour &&
+                  displayingDt.getMinutes() === item.value.min,
               }
             )}
             onClick={() => {
-              let value = setHours(field.value ?? new Date(), item.value.hour)
+              let value = setHours(displayingDt, item.value.hour)
               value = setMinutes(value, item.value.min)
               value = setSeconds(value, 0)
+              setDisplayingDt(value)
               setFieldValue(field.name, value)
             }}
           >

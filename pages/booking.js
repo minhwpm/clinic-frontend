@@ -199,7 +199,7 @@ export default function Booking() {
               return (
                 <>
                   <Form className="w-full max-w-lg text-left">
-                    {/* {console.log("FORM VALUE", values)} */}
+                    {console.log("FORM VALUE", values)}
                     <h2 className="title text-center mb-5">
                       Request an Appointment
                     </h2>
@@ -316,9 +316,9 @@ export default function Booking() {
                           <div className="col-span-2">
                             {typeof values[key] === "string"
                               ? values[key]
-                              : values[key].label
+                              : values[key]?.label
                               ? values[key].label
-                              : values[key].toString()}
+                              : values[key]?.toString()}
                           </div>
                         </div>
                       ))}

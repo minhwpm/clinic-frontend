@@ -8,9 +8,8 @@ const Progress = ({ milestones, activeIndex }) => {
     <div>
       <div className="flex justify-center relative">
         {milestones.map((milestone, index) => (
-          <>
+          <div key={milestone.name} className="flex justify-center">
             <div
-              key={milestone.name}
               className={classNames(
                 "w-8 h-8 border-2 inline-block rounded-full flex justify-center",
                 {
@@ -41,7 +40,7 @@ const Progress = ({ milestones, activeIndex }) => {
                 <div className="h-0.5 w-11/12 bg-primary-light" />
               </div>
             )}
-          </>
+          </div>
         ))}
       </div>
     </div>
