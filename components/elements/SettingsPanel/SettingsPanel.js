@@ -32,6 +32,7 @@ const SettingsPanel = (props) => {
           <Select
             placeholder="Font"
             options={[
+              //@TODO: refactor Font options
               {
                 label: "Default",
                 value: "Quicksand",
@@ -67,6 +68,7 @@ const SettingsPanel = (props) => {
           <Select
             placeholder="Primary color"
             options={[
+              //@TODO: refactor Primary color options
               {
                 value: "#047857",
                 label: (
