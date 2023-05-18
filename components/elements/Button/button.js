@@ -11,6 +11,7 @@ const Button = ({
   loading = false,
   type,
   disabled,
+  children,
 }) => {
   return (
     <button
@@ -53,7 +54,7 @@ const Button = ({
         )}
       >
         {loading && <Loader />}
-        {button.text}
+        {button ? button.text : children}
       </div>
     </button>
   )

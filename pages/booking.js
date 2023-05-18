@@ -10,6 +10,11 @@ import ExpertSelect from "@/components/elements/CustomSelect/ExpertSelect"
 import classNames from "classnames"
 import process from "../json/booking.json"
 import Progress from "@/components/elements/Progess/Progress"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons"
 
 const requiredErrorMessage = "This field is required"
 
@@ -338,8 +343,13 @@ export default function Booking() {
                           type="button"
                           appearance="dark-outline"
                           handleClick={() => setActiveScreen(activeScreen - 1)}
-                          button={{ text: "Back" }}
-                        />
+                        >
+                          <FontAwesomeIcon
+                            className="w-3 mr-2"
+                            icon={faChevronLeft}
+                          />
+                          Back
+                        </Button>
                       </span>
                       <span
                         className={classNames(
@@ -379,8 +389,13 @@ export default function Booking() {
                             setActiveScreen(activeScreen + 1)
                             setContinued(false)
                           }}
-                          button={{ text: "Continue" }}
-                        />
+                        >
+                          Continue
+                          <FontAwesomeIcon
+                            className="text-white w-3 ml-2"
+                            icon={faChevronRight}
+                          />
+                        </Button>
                       </span>
                     </div>
                   </Form>
