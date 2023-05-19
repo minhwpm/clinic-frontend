@@ -27,7 +27,7 @@ const settings = {
 
 const Partners = ({ data }) => {
   return (
-    <section className="bg-secondary-100 pt-8">
+    <section className="partner-section bg-secondary-100 pt-8">
       <h2 className="title text-center mb-10">{data.title}</h2>
       <div className="container px-12 pb-12">
         <Slider className="slider variable-width" settings={settings}>

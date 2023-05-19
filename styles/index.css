@@ -153,7 +153,7 @@ html {
   @apply text-3xl !important
 }
 
-.slick-track {
+.partner-section .slick-track {
   @apply flex !important;
   @apply items-center;
 }
