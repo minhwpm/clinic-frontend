@@ -10,10 +10,12 @@ import Pricing from "./sections/pricing"
 import LeadForm from "./sections/lead-form"
 import Partners from "./sections/Partners/Partners"
 import Article from "./elements/Article/Article"
+import BannerCarousel from "./sections/BannerCarousel/BannerCarousel"
 
 // Map Strapi sections to section components
 const sectionComponents = {
   ComponentSectionsHero: Hero,
+  ComponentSectionsBannerCarousel: BannerCarousel,
   ComponentSectionsLargeVideo: LargeVideo,
   ComponentSectionsFeatureColumnsGroup: FeatureColumnsGroup,
   ComponentSectionsFeatureRowsGroup: FeatureRowsGroup,

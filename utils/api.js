@@ -152,6 +152,24 @@ export async function getPageData({ slug, locale, preview }) {
                     }
                     styling
                   }
+                  ... on ComponentSectionsBannerCarousel {
+                    id
+                    banners {
+                      id
+                      title
+                      url
+                      image {
+                        ...FileParts
+                      }
+                    }
+                    hotLinks {
+                      id
+                      url
+                      text
+                      icon
+                      newTab
+                    }
+                  }
                   ... on ComponentSectionsFeatureColumnsGroup {
                     id
                     title
