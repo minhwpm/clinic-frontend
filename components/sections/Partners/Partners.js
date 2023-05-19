@@ -5,14 +5,20 @@ const settings = {
   autoplay: true,
   infinite: true,
   speed: 500,
+  pauseOnFocus: true,
   slidesToShow: 4,
   slidesToScroll: 1,
   variableWidth: true,
   responsive: [
     {
-      breakpoint: 640,
+      breakpoint: 1280,
       settings: {
-        variableWidth: false,
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
         slidesToShow: 2,
       },
     },
