@@ -4,12 +4,9 @@ import CustomLink from "../elements/custom-link"
 import Slider from "../elements/Slider/Slider"
 
 const settings = {
-  autoplay: true,
   dots: true,
   infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
+  slidesToShow: 2,
   appendDots: function appendDots(dots) {
     // @TODO /research/: className="mb-10" doesn't work here as inline style
     return <div style={{ bottom: "-45px" }}>{dots}</div>

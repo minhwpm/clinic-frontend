@@ -177,16 +177,12 @@ export async function getPageData({ slug, locale, preview }) {
                       id
                       title
                       description
-                      link {
-                        id
-                        newTab
-                        text
-                        url
-                      }
+                      url
                       picture {
                         ...FileParts
                       }
                     }
+                    numberOfColumns
                   }
                   ... on ComponentSectionsFeatureRowsGroup {
                     id
